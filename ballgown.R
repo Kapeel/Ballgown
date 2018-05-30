@@ -36,21 +36,21 @@ bg
 # Perform DE with no filtering
 results_genes = stattest(bg, feature='gene', meas='FPKM', covariate=covariateType, getFC = TRUE)
 results_transcripts = stattest(bg, feature='transcript', meas='FPKM', covariate=covariateType, getFC = TRUE)
-write.table(results_transcripts,"results_trans.tsv",sep="\t")
-write.table(results_genes,"results_gene.tsv",sep="\t")
+write.table(results_transcripts,"results_trans.tsv",sep="\t", row.names=F, quote=F)
+write.table(results_genes,"results_gene.tsv",sep="\t", row.names=F, quote=F)
 
 # Filter low-abundance genes Here we remove all transcripts with a variance across samples less than one
 bg_filt = subset (bg,"rowVars(texpr(bg)) > 1", genomesubset=TRUE)
 results_transcripts = stattest(bg_filt, feature="transcript", covariate=covariateType, getFC=TRUE, meas="FPKM")
 results_genes = stattest(bg_filt, feature="gene", covariate=covariateType, getFC=TRUE, meas="FPKM")
-write.table(results_transcripts,"results_trans_filter.tsv",sep="\t")
-write.table(results_genes,"results_gene_filter.tsv",sep="\t")
+write.table(results_transcripts,"results_trans_filter.tsv",sep="\t", row.names=F, quote=F)
+write.table(results_genes,"results_gene_filter.tsv",sep="\t", row.names=F, quote=F)
 
 # Identify genes with p value < 0.05
 sig_transcripts = subset(results_transcripts,results_transcripts$pval<0.05)
 sig_genes = subset(results_genes,results_genes$pval<0.05)
-write.table(sig_transcripts,"results_trans_filter.sig.tsv",sep="\t")
-write.table(sig_genes,"results_gene_filter.sig.tsv",sep="\t")
+write.table(sig_transcripts,"results_trans_filter.sig.tsv",sep="\t", row.names=F, quote=F)
+write.table(sig_genes,"results_gene_filter.sig.tsv",sep="\t", row.names=F, quote=F)
 
 #plotting
 fpkm=texpr(bg_filt,meas = "FPKM")
